@@ -35,103 +35,103 @@ const LAYERS = [
   {
     id: 'layer1',
     key: 'vedic_timing',
-    name: 'Vedic Timing Gate',
+    name: 'The Temporal Field',
     options: [
-      { val: 'green',  label: 'Green',  score: 1 },
-      { val: 'yellow', label: 'Yellow', score: 0 },
+      { val: 'green',  label: 'Open',        score: 1 },
+      { val: 'yellow', label: 'Cautionary',  score: 0 },
       {
-        val: 'red', label: 'Red', score: null, hardStop: true,
-        reason: 'Active eclipse, major malefic exact transit, or retrograde storm — avoid entirely'
+        val: 'red', label: 'Closed', score: null, hardStop: true,
+        reason: 'The Temporal Field is closed — active eclipse, major malefic exact transit, or retrograde storm. Do not enter.'
       }
     ]
   },
   {
     id: 'layer2',
     key: 'weekly_chaos',
-    name: 'Weekly Chaos State',
+    name: 'Weekly Field State',
     options: [
-      { val: 'trending', label: 'Trending', score: 2 },
-      { val: 'random',   label: 'Random',   score: 0 },
+      { val: 'trending', label: 'Sovereign',  score: 2 },
+      { val: 'random',   label: 'The Smush',  score: 0 },
       {
-        val: 'chaotic', label: 'Chaotic', score: null, hardStop: true,
-        reason: 'Weekly chaotic state means no swing setup exists. Wait for weekly to resolve.'
+        val: 'chaotic', label: 'Tyrant', score: null, hardStop: true,
+        reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.'
       }
     ]
   },
   {
     id: 'layer3',
     key: 'daily_chaos',
-    name: 'Daily Chaos State',
+    name: 'Daily Field State',
     options: [
-      { val: 'trending', label: 'Trending', score:  2 },
-      { val: 'random',   label: 'Random',   score:  1 },
-      { val: 'chaotic',  label: 'Chaotic',  score: -1 }
+      { val: 'trending', label: 'Sovereign',  score:  1 },
+      { val: 'random',   label: 'The Smush',  score:  1 },
+      { val: 'chaotic',  label: 'Tyrant',     score: -1 }
     ]
   },
   {
     id: 'layer4',
     key: 'tf_alignment',
-    name: 'Timeframe Alignment',
+    name: 'Timeframe Convergence',
     options: [
-      { val: 'all',     label: 'All',     score: 2 },
-      { val: 'partial', label: 'Partial', score: 1 },
-      { val: 'none',    label: 'None',    score: 0 }
+      { val: 'all',     label: 'Full Convergence', score: 2 },
+      { val: 'partial', label: 'Partial Accord',   score: 1 },
+      { val: 'none',    label: 'Fractured',         score: 0 }
     ]
   },
   {
     id: 'layer5',
     key: 'strength_index',
-    name: 'Strength Index (Weekly)',
+    name: 'Signal Integrity',
     options: [
-      { val: 'vstrong',  label: 'Very Strong', score:  2 },
-      { val: 'strong',   label: 'Strong',      score:  1 },
-      { val: 'moderate', label: 'Moderate',    score:  0 },
-      { val: 'weak',     label: 'Weak',        score: -1 }
+      { val: 'vstrong',  label: 'High Conviction', score:  1 },
+      { val: 'strong',   label: 'Strong Signal',   score:  1 },
+      { val: 'moderate', label: 'Moderate',        score:  0 },
+      { val: 'weak',     label: 'Noise',           score: -1 }
     ]
   },
   {
     id: 'layer6',
     key: 'technical_setup',
-    name: 'Technical Setup',
+    name: 'Pattern Clarity',
     options: [
-      { val: 'clean',  label: 'Clean',         score: 2 },
-      { val: 'decent', label: 'Decent',         score: 1 },
-      { val: 'nml',    label: "No-man's Land",  score: 0 }
+      { val: 'clean',  label: 'Clean Signal', score: 1 },
+      { val: 'decent', label: 'Readable',     score: 1 },
+      { val: 'nml',    label: 'The Void',     score: 0 }
     ]
   },
   {
     id: 'layer7',
     key: 'somatic_check',
-    name: 'Somatic Check',
+    name: 'The Instrument',
     options: [
-      { val: 'ease',    label: 'Ease',    score: 2 },
-      { val: 'neutral', label: 'Neutral', score: 0 },
+      { val: 'ease',    label: 'Calm Ease', score: 2 },
+      { val: 'neutral', label: 'Neutral',   score: 0 },
       {
-        val: 'anxiety', label: 'Anxiety', score: null, hardStop: true,
-        reason: "Solar plexus anxiety = no trade. Documented history says don't override this."
+        val: 'anxiety', label: 'Solar Plexus Alarm', score: null, hardStop: true,
+        reason: "The Instrument is alarming. Solar plexus anxiety = no trade. Your documented history says don't override this."
       }
     ]
   },
   {
     id: 'layer8',
     key: 'somatic_visual',
-    name: 'Somatic vs Visual',
+    name: 'Instrument Agreement',
     options: [
-      { val: 'agree',    label: 'Agree',    score:  0 },
-      { val: 'disagree', label: 'Disagree', score: -2 }
+      { val: 'agree',    label: 'Aligned',    score:  1 },
+      { val: 'disagree', label: 'Conflicted', score: -2 }
     ]
   }
 ];
 
 const LAYER_NAMES = {
-  layer1: 'Vedic timing',
-  layer2: 'Weekly chaos',
-  layer3: 'Daily chaos',
-  layer4: 'TF alignment',
-  layer5: 'Strength Index',
-  layer6: 'Technical',
-  layer7: 'Somatic',
-  layer8: 'Som/Visual'
+  layer1: 'Temporal Field',
+  layer2: 'Weekly Field',
+  layer3: 'Daily Field',
+  layer4: 'TF Convergence',
+  layer5: 'Signal Integrity',
+  layer6: 'Pattern Clarity',
+  layer7: 'The Instrument',
+  layer8: 'Inst. Agreement'
 };
 
 
@@ -142,11 +142,11 @@ const LAYER_NAMES = {
    ══════════════════════════════════════════════════════════════ */
 
 function getGrade(score) {
-  if (score >= 9) return { grade: 'A+', label: 'Full position',    color: 'success' };
-  if (score >= 7) return { grade: 'A',  label: 'Standard position', color: 'success' };
-  if (score >= 5) return { grade: 'B+', label: 'Reduced size',      color: 'warning' };
-  if (score >= 3) return { grade: 'B',  label: 'Watch only',        color: 'warning' };
-  return           { grade: 'X',  label: 'No trade',          color: 'danger'  };
+  if (score >= 10) return { grade: 'A+',       label: 'Full position',    color: 'success' };
+  if (score >= 8)  return { grade: 'A',        label: 'Standard position', color: 'success' };
+  if (score >= 6)  return { grade: 'B+',       label: 'Reduced size',      color: 'warning' };
+  if (score >= 4)  return { grade: 'Watch',    label: 'Watch only',        color: 'warning' };
+  return                   { grade: 'No Trade', label: 'No trade',          color: 'danger'  };
 }
 
 // INPUT:  { layer1: { val, score }, layer2: { val, score }, … }
@@ -155,9 +155,9 @@ function getGrade(score) {
 function calculateScore(inputs) {
   // ── Hard stop check (before any arithmetic) ──────────────
   const HARD_STOPS = {
-    layer1: { val: 'red',     reason: 'Active eclipse, major malefic exact transit, or retrograde storm — avoid entirely' },
-    layer2: { val: 'chaotic', reason: 'Weekly chaotic state means no swing setup exists. Wait for weekly to resolve.' },
-    layer7: { val: 'anxiety', reason: "Solar plexus anxiety = no trade. Documented history says don't override this." }
+    layer1: { val: 'red',     reason: 'The Temporal Field is closed — active eclipse, major malefic exact transit, or retrograde storm. Do not enter.' },
+    layer2: { val: 'chaotic', reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.' },
+    layer7: { val: 'anxiety', reason: "The Instrument is alarming. Solar plexus anxiety = no trade. Your documented history says don't override this." }
   };
 
   for (const [layer, cfg] of Object.entries(HARD_STOPS)) {
@@ -393,7 +393,7 @@ function renderVerdict(hardStopIndex) {
   document.getElementById('verdict-grade').textContent  = result.grade;
   document.getElementById('verdict-action').textContent = result.label;
   document.getElementById('verdict-score-total').innerHTML =
-    `${result.score} <span class="denom">/ 13</span>`;
+    `${result.score} <span class="denom">/ 11</span>`;
 
   // Breakdown pills
   const grid = document.getElementById('verdict-breakdown');
