@@ -35,10 +35,13 @@ const LAYERS = [
   {
     id: 'layer1',
     key: 'temporal_field',
-    name: 'Macro Conditions',
+    name: 'The Room',
+    question: "What's the vibe?",
+    description: "The opening read. Before anything else — is this a moment worth entering? Markets have texture. Read the room before you read anything else.",
+    helper: "High-impact macro events today or within your hold window? (Fed, CPI, NFP, earnings on this instrument) | VIX environment — spiking or collapsing in ways that distort price? | Broader market regime intact, or sector rotation underway? | Does the day feel alive and directional, or heavy and unresolved?",
     options: [
-      { val: 'resonant',  label: 'Resonant',   score: 1 },
-      { val: 'murky',     label: 'Murky',      score: 0 },
+      { val: 'resonant',  label: 'Resonant',  score: 1 },
+      { val: 'murky',     label: 'Murky',     score: 0 },
       {
         val: 'disrupted', label: 'Disrupted', score: null, hardStop: true,
         reason: 'Macro Conditions are Disrupted — major scheduled catalyst imminent (Fed, CPI, NFP, earnings) or systemic stress active. Do not enter.'
@@ -49,12 +52,14 @@ const LAYERS = [
     id: 'layer2',
     key: 'weekly_chaos',
     name: 'Weekly Field State',
+    question: "Is the market putting itself out there?",
     options: [
-      { val: 'trending', label: 'Sovereign',  score: 2 },
-      { val: 'random',   label: 'The Smush',  score: 0 },
+      { val: 'trending', label: 'Sovereign',  score: 2, description: "Directed, available, moving with intention." },
+      { val: 'random',   label: 'The Smush',  score: 0, description: "Present but not yet offering itself." },
       {
         val: 'chaotic', label: 'Tyrant', score: null, hardStop: true,
-        reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.'
+        reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.',
+        description: "Performing power it doesn't actually have."
       }
     ]
   },
@@ -62,53 +67,64 @@ const LAYERS = [
     id: 'layer3',
     key: 'daily_chaos',
     name: 'Daily Field State',
+    question: "Is the pull real?",
+    description: "Present-moment temperature check. The weekly showed interest — is the daily confirming? Genuine heat building toward you, or scattered and erratic?",
     options: [
-      { val: 'trending', label: 'Sovereign',  score:  1 },
-      { val: 'random',   label: 'The Smush',  score:  1 },
-      { val: 'chaotic',  label: 'Tyrant',     score: -1 }
+      { val: 'trending', label: 'Sovereign', score:  1, description: "Real pull, building." },
+      { val: 'random',   label: 'The Smush', score:  1, description: "Heat present, still coiling." },
+      { val: 'chaotic',  label: 'Tyrant',    score: -1, description: "Scattered. Not today." }
     ]
   },
   {
     id: 'layer4',
     key: 'tf_alignment',
     name: 'Timeframe Convergence',
+    question: "Is all of you pulling?",
+    description: "Not a temperature read — a listening. Are every scale and register oriented the same direction simultaneously? Surface heat without systemic agreement is a named condition: wait.",
     options: [
-      { val: 'all',     label: 'Full Convergence', score: 2 },
-      { val: 'partial', label: 'Partial Accord',   score: 1 },
-      { val: 'none',    label: 'Fractured',         score: 0 }
+      { val: 'all',     label: 'Full Convergence', score: 2, description: "Every timeframe saying the same thing." },
+      { val: 'partial', label: 'Partial Accord',   score: 1, description: "Mostly aligned. One register hesitating." },
+      { val: 'none',    label: 'Fractured',        score: 0, description: "Conflicting signals at different scales. Surface desire, systemic ambivalence." }
     ]
   },
   {
     id: 'layer5',
     key: 'strength_index',
     name: 'Signal Integrity',
+    question: "Is there substance here?",
+    description: "How deep does this actually go? Genuine Hurst persistence or surface agitation?",
     options: [
-      { val: 'vstrong',  label: 'High Conviction', score:  1 },
-      { val: 'strong',   label: 'Strong Signal',   score:  1 },
-      { val: 'moderate', label: 'Moderate',        score:  0 },
-      { val: 'weak',     label: 'Noise',           score: -1 }
+      { val: 'vstrong',  label: 'High Conviction', score:  1, description: "Full-body wanting. Real persistence beneath the move." },
+      { val: 'strong',   label: 'Strong Signal',   score:  1, description: "Solid. Present and directional." },
+      { val: 'moderate', label: 'Moderate',        score:  0, description: "Something here but not deep." },
+      { val: 'weak',     label: 'Noise',           score: -1, description: "Surface agitation. No underlying movement." }
     ]
   },
   {
     id: 'layer6',
     key: 'technical_setup',
     name: 'Pattern Clarity',
+    question: "Do you have somewhere to go?",
+    description: "Is there a specific destination — a cuff level where the market has shown its nature before?",
     options: [
-      { val: 'clean',  label: 'Clean Signal', score: 1 },
-      { val: 'decent', label: 'Readable',     score: 1 },
-      { val: 'nml',    label: 'The Void',     score: 0 }
+      { val: 'clean',  label: 'Clean Signal', score: 1, description: "Steel cuff — deepest imprint. Returned here multiple times, held, pushed, held again." },
+      { val: 'decent', label: 'Readable',     score: 1, description: "Leather cuff — history and grip. Tested meaningfully. Something established." },
+      { val: 'nml',    label: 'The Void',     score: 0, description: "Velvet cuff or no destination. Gentle or unclear." }
     ]
   },
   {
     id: 'layer7',
     key: 'somatic_check',
     name: 'The Instrument',
+    question: "Hell yes or not right now?",
+    description: "The body check before committing. Not excitement — ease. Calm, open, unhurried desire.",
     options: [
-      { val: 'ease',    label: 'Calm Ease', score: 2 },
-      { val: 'neutral', label: 'Neutral',   score: 0 },
+      { val: 'ease',    label: 'Calm Ease', score: 2, description: "Belly warmth, openness, absence of urgency. Clean yes." },
+      { val: 'neutral', label: 'Neutral',   score: 0, description: "Inconclusive. Proceed at reduced size with attention." },
       {
         val: 'anxiety', label: 'Solar Plexus Alarm', score: null, hardStop: true,
-        reason: "The Instrument is alarming. Solar plexus anxiety = no trade. Your documented history says don't override this."
+        reason: "The Instrument is alarming. Solar plexus anxiety = no trade. Your documented history says don't override this.",
+        description: "Hard stop. Your documented history says don't override this."
       }
     ]
   },
@@ -116,15 +132,17 @@ const LAYERS = [
     id: 'layer8',
     key: 'somatic_visual',
     name: 'Instrument Agreement',
+    question: "Are you both saying the same thing?",
+    description: "Final check. Body and chart — same market?",
     options: [
-      { val: 'agree',    label: 'Aligned',    score:  1 },
-      { val: 'disagree', label: 'Conflicted', score: -2 }
+      { val: 'agree',    label: 'Aligned',    score:  1, description: "Two channels of perception arriving at the same truth simultaneously." },
+      { val: 'disagree', label: 'Conflicted', score: -2, description: "Something is split. Wait until they speak together." }
     ]
   }
 ];
 
 const LAYER_NAMES = {
-  layer1: 'Macro Conditions',
+  layer1: 'The Room',
   layer2: 'Weekly Field',
   layer3: 'Daily Field',
   layer4: 'TF Convergence',
@@ -329,6 +347,9 @@ function buildLayerCard(layer, index, locked) {
   card.innerHTML = `
     <span class="layer-num">Layer ${index + 1}</span>
     <div class="layer-name">${layer.name}</div>
+    ${layer.question   ? `<div class="layer-question">${layer.question}</div>` : ''}
+    ${layer.description ? `<div class="layer-description">${layer.description}</div>` : ''}
+    ${layer.helper      ? `<div class="layer-helper">${layer.helper}</div>` : ''}
     <div class="options-grid${twoUp ? ' two-up' : ''}">
       ${layer.options.map(opt => {
         const isSelected = sel && sel.val === opt.val;
@@ -348,7 +369,10 @@ function buildLayerCard(layer, index, locked) {
             data-score="${isStop ? 'null' : opt.score}"
             data-is-stop="${isStop}"
           >
-            <span class="option-label">${opt.label}</span>
+            <span class="option-text">
+              <span class="option-label">${opt.label}</span>
+              ${opt.description ? `<span class="option-description">${opt.description}</span>` : ''}
+            </span>
             <span class="option-score ${scoreClass}">${scoreLabel}</span>
           </button>`;
       }).join('')}
