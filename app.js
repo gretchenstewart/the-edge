@@ -523,6 +523,11 @@ function goToDashboard() {
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
+function goToReference() {
+  showScreen('screen-reference');
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
 
 /* ══════════════════════════════════════════════════════════════
    INIT
@@ -536,6 +541,8 @@ function init() {
   // Navigation
   document.getElementById('btn-open-tree').addEventListener('click', goToEntry);
   document.getElementById('btn-back').addEventListener('click', goToDashboard);
+  document.getElementById('btn-open-ref').addEventListener('click', goToReference);
+  document.getElementById('btn-ref-back').addEventListener('click', goToDashboard);
 
   // Option selection (event delegation — one listener for all 8 layers)
   document.getElementById('layers-container').addEventListener('click', handleOptionClick);
