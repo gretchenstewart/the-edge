@@ -55,7 +55,7 @@ const LAYERS = [
     question: "Is the market putting itself out there?",
     options: [
       { val: 'trending', label: 'Sovereign',  score: 2, description: "Directed, available, moving with intention." },
-      { val: 'random',   label: 'The Smush',  score: 0, description: "Present but not yet offering itself." },
+      { val: 'the_dud',  label: 'The Dud',    score: 0, description: "In the room but not arriving. The energy exists — it's just not leading anywhere. No grip, no direction, no commitment. He showed up. That's about it." },
       {
         val: 'chaotic', label: 'Tyrant', score: null, hardStop: true,
         reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.',
@@ -71,7 +71,7 @@ const LAYERS = [
     description: "Present-moment temperature check. The weekly showed interest — is the daily confirming? Genuine heat building toward you, or scattered and erratic?",
     options: [
       { val: 'trending', label: 'Sovereign', score:  1, description: "Real pull, building." },
-      { val: 'random',   label: 'The Smush', score:  1, description: "Heat present, still coiling." },
+      { val: 'the_dud',  label: 'The Dud',   score:  1, description: "Heat present, still coiling." },
       { val: 'chaotic',  label: 'Tyrant',    score: -1, description: "Scattered. Not today." }
     ]
   },
@@ -93,6 +93,7 @@ const LAYERS = [
     name: 'Signal Integrity',
     question: "Is there substance here?",
     description: "How deep does this actually go? Genuine Hurst persistence or surface agitation?",
+    note: "Read via your Strength Index on the entry timeframe — Hurst persistence is the depth component that separates genuine trend conviction from surface momentum.",
     options: [
       { val: 'vstrong',  label: 'High Conviction', score:  1, description: "Full-body wanting. Real persistence beneath the move." },
       { val: 'strong',   label: 'Strong Signal',   score:  1, description: "Solid. Present and directional." },
@@ -102,14 +103,14 @@ const LAYERS = [
   },
   {
     id: 'layer6',
-    key: 'technical_setup',
+    key: 'pattern_clarity',
     name: 'Pattern Clarity',
-    question: "Do you have somewhere to go?",
-    description: "Is there a specific destination — a cuff level where the market has shown its nature before?",
+    question: "Does he know where he's taking you?",
+    description: "A dominant who knows what he wants moves with direction even when he's making you wait. The pull is unmistakable. But a DOM who's uncertain, blocked by his own unresolved history, or performing confidence he doesn't have — that's not tension. That's confusion. You can feel the difference.",
     options: [
-      { val: 'clean',  label: 'Clean Signal', score: 1, description: "Steel cuff — deepest imprint. Returned here multiple times, held, pushed, held again." },
-      { val: 'decent', label: 'Readable',     score: 1, description: "Leather cuff — history and grip. Tested meaningfully. Something established." },
-      { val: 'nml',    label: 'The Void',     score: 0, description: "Velvet cuff or no destination. Gentle or unclear." }
+      { val: 'clear_intention', label: 'Clear Intention', score:  2, description: "Steel cuff — deepest imprint. He knows exactly where this is going. Strong magnetic level ahead, path relatively open." },
+      { val: 'the_tease',       label: 'The Tease',       score:  1, description: "Leather cuff — history and grip. The pull is real, destination is clear, but something sits between here and there. Unfinished business. He hasn't forgotten where he's taking you — he's just not done with this moment yet." },
+      { val: 'lost_or_blocked', label: 'Lost or Blocked', score: -1, description: "No clear magnetic level, or so much overhead confusion he can't lead cleanly. This isn't tension — it's confusion. Not right now." }
     ]
   },
   {
@@ -160,11 +161,30 @@ const LAYER_NAMES = {
    ══════════════════════════════════════════════════════════════ */
 
 function getGrade(score) {
-  if (score >= 10) return { grade: 'A+',       label: 'Full position',    color: 'success' };
-  if (score >= 8)  return { grade: 'A',        label: 'Standard position', color: 'success' };
-  if (score >= 6)  return { grade: 'B+',       label: 'Reduced size',      color: 'warning' };
-  if (score >= 4)  return { grade: 'Watch',    label: 'Watch only',        color: 'warning' };
-  return                   { grade: 'X',        label: 'No trade',          color: 'danger'  };
+  if (score >= 11) return { grade: 'A+',    label: 'Full position — all systems consenting', color: 'success' };
+  if (score >= 9)  return { grade: 'A',     label: 'Standard position',                      color: 'success' };
+  if (score >= 7)  return { grade: 'B+',    label: 'Reduced size',                           color: 'warning' };
+  if (score >= 5)  return { grade: 'B',     label: 'Watch only',                             color: 'warning' };
+  return                   { grade: 'X',    label: 'No trade',                               color: 'danger'  };
+}
+
+function getHoldingProfile(layerVals) {
+  const clarity = layerVals.pattern_clarity;
+  if (clarity === 'the_tease') {
+    return {
+      label:       'The Tease',
+      instruction: 'Longer hold · Wider stop · Smaller initial size',
+      note:        'Let him build. This is accumulation, not a sprint.'
+    };
+  }
+  if (clarity === 'clear_intention') {
+    return {
+      label:       'Clear Intention',
+      instruction: 'Standard swing · Tighter stop',
+      note:        'Direction is clean. Execute with precision.'
+    };
+  }
+  return null;
 }
 
 // INPUT:  { layer1: { val, score }, layer2: { val, score }, … }
@@ -347,8 +367,9 @@ function buildLayerCard(layer, index, locked) {
   card.innerHTML = `
     <span class="layer-num">Layer ${index + 1}</span>
     <div class="layer-name">${layer.name}</div>
-    ${layer.question   ? `<div class="layer-question">${layer.question}</div>` : ''}
+    ${layer.question    ? `<div class="layer-question">${layer.question}</div>` : ''}
     ${layer.description ? `<div class="layer-description">${layer.description}</div>` : ''}
+    ${layer.note        ? `<div class="layer-note">${layer.note}</div>` : ''}
     ${layer.helper      ? `<div class="layer-helper">${layer.helper}</div>` : ''}
     <div class="options-grid${twoUp ? ' two-up' : ''}">
       ${layer.options.map(opt => {
@@ -417,7 +438,25 @@ function renderVerdict(hardStopIndex) {
   document.getElementById('verdict-grade').textContent  = result.grade;
   document.getElementById('verdict-action').textContent = result.label;
   document.getElementById('verdict-score-total').innerHTML =
-    `${result.score} <span class="denom">/ 11</span>`;
+    `${result.score} <span class="denom">/ 12</span>`;
+
+  // Holding profile
+  const holdingEl = document.getElementById('verdict-holding');
+  const layerVals = {};
+  for (const layer of LAYERS) {
+    const sel = state.inputs[layer.id];
+    if (sel) layerVals[layer.key] = sel.val;
+  }
+  const holding = getHoldingProfile(layerVals);
+  if (holding && result.grade !== 'X') {
+    holdingEl.innerHTML = `
+      <div class="holding-label">${holding.label}</div>
+      <div class="holding-instruction">${holding.instruction}</div>
+      <div class="holding-note">${holding.note}</div>`;
+    holdingEl.style.display = 'block';
+  } else {
+    holdingEl.style.display = 'none';
+  }
 
   // Breakdown pills
   const grid = document.getElementById('verdict-breakdown');
