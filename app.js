@@ -34,14 +34,14 @@ const DataService = {
 const LAYERS = [
   {
     id: 'layer1',
-    key: 'vedic_timing',
-    name: 'The Temporal Field',
+    key: 'temporal_field',
+    name: 'Macro Conditions',
     options: [
-      { val: 'green',  label: 'Open',        score: 1 },
-      { val: 'yellow', label: 'Cautionary',  score: 0 },
+      { val: 'resonant',  label: 'Resonant',   score: 1 },
+      { val: 'murky',     label: 'Murky',      score: 0 },
       {
-        val: 'red', label: 'Closed', score: null, hardStop: true,
-        reason: 'The Temporal Field is closed — active eclipse, major malefic exact transit, or retrograde storm. Do not enter.'
+        val: 'disrupted', label: 'Disrupted', score: null, hardStop: true,
+        reason: 'Macro Conditions are Disrupted — major scheduled catalyst imminent (Fed, CPI, NFP, earnings) or systemic stress active. Do not enter.'
       }
     ]
   },
@@ -124,7 +124,7 @@ const LAYERS = [
 ];
 
 const LAYER_NAMES = {
-  layer1: 'Temporal Field',
+  layer1: 'Macro Conditions',
   layer2: 'Weekly Field',
   layer3: 'Daily Field',
   layer4: 'TF Convergence',
@@ -146,7 +146,7 @@ function getGrade(score) {
   if (score >= 8)  return { grade: 'A',        label: 'Standard position', color: 'success' };
   if (score >= 6)  return { grade: 'B+',       label: 'Reduced size',      color: 'warning' };
   if (score >= 4)  return { grade: 'Watch',    label: 'Watch only',        color: 'warning' };
-  return                   { grade: 'No Trade', label: 'No trade',          color: 'danger'  };
+  return                   { grade: 'X',        label: 'No trade',          color: 'danger'  };
 }
 
 // INPUT:  { layer1: { val, score }, layer2: { val, score }, … }
@@ -155,7 +155,7 @@ function getGrade(score) {
 function calculateScore(inputs) {
   // ── Hard stop check (before any arithmetic) ──────────────
   const HARD_STOPS = {
-    layer1: { val: 'red',     reason: 'The Temporal Field is closed — active eclipse, major malefic exact transit, or retrograde storm. Do not enter.' },
+    layer1: { val: 'disrupted', reason: 'Macro Conditions are Disrupted — major scheduled catalyst imminent (Fed, CPI, NFP, earnings) or systemic stress active. Do not enter.' },
     layer2: { val: 'chaotic', reason: 'Weekly field is Tyrant — no swing setup exists. Wait for the weekly to resolve.' },
     layer7: { val: 'anxiety', reason: "The Instrument is alarming. Solar plexus anxiety = no trade. Your documented history says don't override this." }
   };
@@ -425,7 +425,7 @@ function buildSessionData(result) {
     hard_stop:        result.hardStop,
     hard_stop_reason: result.hardStopReason,
     // Phase 2 fields — schema ready, values null for now
-    instrument:    null,
+    ticker:        null,
     entry_price:   null,
     outcome:       null,
     outcome_notes: null
